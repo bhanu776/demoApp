@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+/* --------------------------------------------table styling-------------------------------------------s */
+.i-table{
+	width: 100%;
+	border: 1px solid grey;
+	border-collapse: collapse;
+	padding: 5px;
+}
+
+.i-table tr:nth-child(odd) {
+	background-color: #f1f1f1;
+  }
+.i-table tr:nth-child(even) {
+	background-color: #ffffff;
+  }
+/* --------------------------------------------------------validation stylings--------------------------------------- */
+.ng-invalid{
+    border-color: rgb(211, 67, 67);
+}
+

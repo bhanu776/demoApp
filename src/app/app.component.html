@@ -1,0 +1,57 @@
+<div class="menu">
+  <ul class="ul">
+    <li class="li" routerLink="/">Home</li>
+    <li class="li" routerLink="/product">Product</li>
+    <li class="li" routerLink="/configuration">Configuration</li>
+    <li class="li" routerLink="/orderhistory">Order History</li>
+  </ul>
+
+  <tabs class="main-tab">
+  <tab tabTitle="table" id="sub-tab">
+    <table class="i-table" >
+      <tr>
+        <th class="th" align="center">TableNo</th><th class="th" align="center">Total</th>
+      </tr>
+      <tr *ngFor="let d of runningTData" routerLink="/home/{{d.table}}/1">    <!-- 1 = get data from order table and 0 = get data from history -->
+        <td class="td" align="center">{{d.table}}</td><td class="td" align="center">{{d.total}}</td>
+      </tr>
+      </table>
+  </tab>
+  <tab tabTitle="pickup" id="sub-tab">
+    <table class="i-table">
+      <tr>
+        <th class="th" align="center">id</th><th class="th" align="center">Total</th>
+        
+      </tr>
+      <tr *ngFor="let t of takeawayData" routerLink="/home/{{t.id}}/0">
+        <td class="td" align="center">{{t.id}}</td><td class="td" align="center">{{t.gtotal_price}}</td>
+      </tr>
+      </table>
+  </tab>
+  <tab tabTitle="online" id="sub-tab">
+    <table class="i-table">
+      <tr>
+        <th class="th" align="center">id</th><th class="th" align="center">Total</th>
+        
+      </tr>
+      <tr *ngFor="let t of deliveryData" routerLink="/home/{{t.id}}/0">
+        <td class="td" align="center">{{t.id}}</td><td class="td" align="center">{{t.gtotal_price}}</td>
+      </tr>
+      </table>
+  </tab>
+  <tab tabTitle="kot" id="sub-tab">
+      <table class="i-table" >
+        <tr>
+          <th class="th" align="center">Id</th><th class="th" align="center">Total</th>
+        </tr>
+        <tr *ngFor="let th of todaysHistory" routerLink="/home/{{th.id}}/0">
+          <td class="td" align="center">{{th.id}}</td><td class="td" align="center">{{th.gtotal_price}}</td>
+        </tr>
+        </table>
+    </tab>
+  </tabs>
+  <!-- {{data |json}} -->
+</div>
+<div class="main">
+  <router-outlet></router-outlet>
+</div>

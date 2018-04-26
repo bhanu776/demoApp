@@ -1,0 +1,144 @@
+<form  [formGroup] ="form">
+<!-- <input type="hidden" name="id" formControlName="id"> -->
+<div class="i-field-container">
+	<div class="small-container"></div>
+	<div class="small-container">
+		<div class="input-div-small">
+			<label>DineIn:</label>
+			<input type="radio" name="type" value="1" (click)="dineInSelect($event)" formControlName="type">
+		</div>
+		<div class="input-div-small">
+			<label>Takeaway:</label>
+			<input type="radio" name="type" value="2" (click)="otherSelect($event)" formControlName="type">
+		</div>
+		<div class="input-div-small">
+			<label>Delivery:</label>
+			<input type="radio" name="type" value="3" (click)="otherSelect($event)" formControlName="type">
+		</div>
+		<div class="input-div-medium">
+			<label>TableNo:</label>
+			<input #table type="text" name="table_no" class="input-adj" (keypress)="tableSelected($event)" formControlName="table_no">
+			<label (click)="getRunningOrder(form.value.table_no)">viewtable</label>
+		</div>
+	</div>
+	<div class="small-container">
+		<div class="input-div-medium">
+			<input formControlName="mobile"
+			 ngui-auto-complete #mobileDOM
+			 (keypress)="changeFoToItem($event)" 
+			 (valueChanged) = "onSelectPhone($event)"
+			 type="text" class="input"
+			 placeholder="Mobile"
+			 [source]="getUserDetails.bind(this)"
+			 [list-formatter]="userDetailFormatter"
+			 value-property-name="id"
+			 display-property-name="name"
+			 max-num-list="10"		
+			 auto-select-first-item="true"
+			 >
+		</div>
+		<div class="input-div-medium">
+			<input appFocusNext type="text" name="name" class="input" placeholder="Name" formControlName="name">
+		</div>
+	</div>
+	<div class="small-container">
+		<div class="input-div-large">
+			<input appFocus type="text" name="address" class="input" placeholder="Address" formControlName="address">
+		</div>
+		<div class="input-div-large">
+			<input type="text" name="address2" class="input" placeholder="Address2" (keypress)="gotoItems($event)" formControlName="address2">
+		</div>
+	</div>
+	<div class="small-container">
+		<input type="hidden" name="item_id" formControlName="item_id">
+		<div class="input-div-large">
+			<input #itemFocus ngui-auto-complete
+					(keypress) = "changeFoToComment($event)"
+					(valueChanged) = "valueChanged($event)"
+					class="input" name="item" type="text"
+					formControlName="item"
+					[source]="observableSource.bind(this)"
+					[list-formatter]="autocompleListFormatter"
+					value-property-name="id"
+					display-property-name="name"
+					max-num-list="10"
+					placeholder="Items"		
+					auto-select-first-item="true"
+					class="form-control">
+		</div>
+		<div class="input-div-medium">
+			<input appFocus type="text" name="comment" class="input" placeholder="Special Comment" formControlName="comment">
+		</div>
+		<div class="input-div-small">
+			<input appFocus type="text" name="quantity" class="input" placeholder="Quantity" (focus)="$event.target.select()" (keyup)="calculatePriceAccQuant(form.value.quantity)" formControlName="quantity">
+		</div>
+		<div class="input-div-small">
+			<input appFocus type="text" name="price" class="input" placeholder="Price" formControlName="price">
+		</div>
+		<div class="input-div-small">
+			<input type="text" name="total_price" class="input" placeholder="Total Price" (keydown)="onSubmit(form.value,$event)" formControlName="total_price">
+    	</div>
+	</div>
+</div>
+</form>
+<div class="i-field-container">
+	<table class="i-table">
+	<tr>
+		<th class="th" align="left">Item</th><th class="th" align="left">Comment</th>
+		<th class="th" align="right">Quantity</th><th class="th" align="right">Price</th>
+		<th class="th" align="right">TotalPrice</th><th class="th" align="right">del</th>
+	</tr>
+	<tr *ngFor="let o of order">
+		<td class="td" align="left">{{o.item}}</td><td class="td" align="left">{{o.comment}}</td>
+		<td class="td" align="right">{{o.quantity}}</td><td class="td" align="right">{{o.price}}</td>
+		<td class="td" align="right">{{o.total_price}}</td>
+		<td class="td" align="right"><a (click)="deleteData(o.id,o.table_no)">x</a></td>
+	</tr>
+	</table>
+	<!-- {{form.value |json}} -->
+</div>
+<div class="i-field-container">
+	<form #calculationForm="ngForm">
+		<table class="i-table">
+			<tr>
+				<th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+				<th class="th" align="right">Total Quantity</th><td class="td" align="right">{{total_quantity}}</td>
+				<th class="th" align="right">GTotal Price</th><td class="td" align="right">{{gtotla_price}}</td>
+			</tr>
+			<tr>
+				<th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th class="th" align="right">Discount(%)</th>
+				<td class="td" align="right"><input type="number" name="discount_per" class="input-adj" (keyup)="calculateDiscPer(calculationForm.value.discount_per)" ngModel></td>
+				<th class="th" align="right">Discount(Rs.)</th>
+				<td class="td" align="right"><input type="number"name="discount_rs" class="input-adj" (keyup)="calculateDiscRs(calculationForm.value.discount_rs)" ngModel></td>
+				<th class="th" align="right">{{this.gtotla_price-(discount_per+discount_rs)}}</th>
+			</tr>
+			<tr>
+				<th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+				<th class="th" align="right">Round</th><th class="th" align="right">{{total_discount}}</th>
+			</tr>
+			<tr>
+				<th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th class="th" align="right">CGST({{settings.cgst}}%)</th>
+				<td class="td" align="right">{{cgst}}</td>
+				<th class="th" align="right">SGST({{settings.sgst}}%)</th>
+				<td class="td" align="right">{{sgst}}</td>
+				<th class="th" align="right">{{total_after_tax}}</th>
+			</tr>
+			<tr>
+				<th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th class="th" align="right">ContainerCharge(Rs.)</th>
+				<td class="td" align="right"><input type="number" name="container_charge" class="input-adj" (keyup)="calculateContaiCharge(calculationForm.value.container_charge)" ngModel></td>
+				<th class="th" align="right">Delivery Charge(Rs.)</th>
+				<td class="td" align="right"><input type="number"name="delivery_charge" class="input-adj" (keyup)="calculateDelivCharge(calculationForm.value.delivery_charge)" ngModel></td>
+				<th class="th" align="right">{{total_after_tax+container_charge+delivery_charge}}</th>
+			</tr>
+			<tr>
+				<th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+				<th class="th" align="right">Round</th><th class="th" align="right">{{total_aditional}}</th>
+			</tr>
+			<tr>
+				<th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th></th><th class="th" align="right">CustomerPaid(Rs.)</th>
+				<td class="td" align="right"><input type="number" class="input-adj" name="customer_paid" (keyup)="calculateReturn(calculationForm.value.customer_paid)" ngModel></td>
+				<th class="th" align="right">Return(Rs.)</th><td class="td" align="right">{{return_amount}}</td>
+			</tr>
+		</table>
+	</form>
+</div>

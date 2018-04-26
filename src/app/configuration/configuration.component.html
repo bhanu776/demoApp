@@ -1,0 +1,79 @@
+<div class="top-div-container">
+  <div (click)="showPrinterDiv()" class="small-box-div">
+  <ul class="setting-ul">
+    <li>Printer's</li>
+    <li>Settings</li>
+  </ul>
+  </div>
+  <div (click)="showTaxDiv()" class="small-box-div">
+    <ul class="setting-ul">
+      <li>Tax</li>
+      <li>Config</li>
+    </ul>
+  </div>
+  <div (click)="showOtherDiv()" class="small-box-div">
+    <ul class="setting-ul">
+      <li>Restro</li>
+      <li>Details</li>
+    </ul>
+  </div>
+</div>
+<div class="middle-div-container">
+  <div #printerArea class="printer">
+    <div class="input-div-medium">
+      <label>Kot Printer</label>
+      <select class="input" [(ngModel)]="kotPrinter" (change)="setKotPrinter(kotPrinter)">
+        <option selected disabled>SelectPrinter</option>
+        <option *ngFor="let p of printers" value="{{p}}">{{p}}</option>
+      </select>
+    </div>
+    <div class="input-div-medium">
+      <label>Bill Printer</label>
+      <select class="input" [(ngModel)]="billPrinter" (change)="setBillPrinter(billPrinter)">
+        <option selected disabled>SelectPrinter</option>
+        <option *ngFor="let p of printers" value="{{p}}">{{p}}</option>
+      </select>
+    </div>
+  </div>
+  <div #taxArea class="printer" style="display: none;">
+      <div class="input-div-medium">
+          <label>CGST:</label>
+          <input type="text" class="input" name="cgst" [(ngModel)]="cgst" (keyup)="saveCgstPre()">
+      </div>
+      <div class="input-div-medium">
+          <label>SGST:</label>
+          <input type="text" class="input" name="sgst" [(ngModel)]="sgst" (keyup)="saveSgstPre()">
+      </div>
+      <div>
+          <label>Inclusive:</label><input type="radio" name="ttype" [(ngModel)]="ttype" value="inclusive" (change)="saveTaxType()">
+          <label>Exclusive:</label><input type="radio" name="ttype" [(ngModel)]="ttype" value="exclusive" (change)="saveTaxType()">
+      </div>
+  </div>
+  <div #detailArea class="printer" style="display: none;">
+    <form (submit)="saveDetails()">
+    <div class="input-div-medium">
+        <label>Name:</label>
+        <input type="text" class="input" name="name" [(ngModel)]="name">
+    </div>
+    <div class="input-div-medium">
+        <label>GST Number:</label>
+        <input type="text" class="input" name="gstn" [(ngModel)]="gstn">
+    </div>
+    <div class="input-div-medium">
+        <label>SGST:</label>
+        <input type="number" class="input" name="mobile" [(ngModel)]="mobile">
+    </div>
+    <div class="input-div-medium">
+        <label>Address</label>
+        <textarea name="address" class="input" [(ngModel)]="address"></textarea>
+    </div>
+    <div class="input-div-medium">
+        <label></label>
+        <input type="submit" class="input" value="save">
+    </div>
+    <div>
+        
+    </div>
+  </form>
+</div>
+</div>

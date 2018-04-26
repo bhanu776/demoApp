@@ -1,0 +1,37 @@
+.history-div{
+    margin-top: 10px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+.table{
+    border-top: 1px groove rgb(0, 0, 0);
+    border-right: 1px groove rgb(0, 0, 0);
+    border-bottom: 1px groove rgb(0, 0, 0);
+}
+.td,.th{
+    border-left: 1px groove rgb(0, 0, 0);
+}
+.th{
+    border-bottom: 1px groove black;
+}
+table{
+    width: 100%;
+}
+.table-head{
+    border-top: 1px groove rgb(0, 0, 0);
+    border-right: 1px groove rgb(0, 0, 0);
+    border-bottom: 1px groove rgb(0, 0, 0);
+}
+.td-head,.th-head{
+    border-left: 1px groove rgb(0, 0, 0);
+}
+.td-head{
+    color: blue;
+    border-top: 2px groove black;
+}
+
+
+.head-total-calculation{
+    width: 99%;
+    height: 50px;
+}

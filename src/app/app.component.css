@@ -1,0 +1,31 @@
+.menu{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 19%;
+    height: 650px;
+    float: left;
+    overflow: hidden;
+}
+.main{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 5px;
+    float: right;
+    width: 80%;
+    height: 700px;
+    overflow: hidden;
+    border-left: 2px groove black;
+}
+.main-tab{
+    padding: 0;
+}
+
+#sub-tab{
+    padding: 0 !important;
+}
+
+.ul{
+    list-style: none;
+}

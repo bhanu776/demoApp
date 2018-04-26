@@ -1,0 +1,33 @@
+<div class="head-total-calculation">
+ <table class="table-head" cellspacing="0" cellpadding="0">
+   <tr>
+      <th class="th-head">Takeaway</th><th class="th-head">Dinein</th>
+      <th class="th-head">Devliery</th><th class="th-head">Total</th>
+   </tr>
+   <tr>
+    <td class="td-head" align="center">{{takeaway}}</td><td class="td-head" align="center">{{dinein}}</td>
+    <td class="td-head" align="center">{{delivery}}</td><td class="td-head" align="center">{{total}}</td>
+   </tr>
+ </table>
+</div>
+<div class="history-div table">
+<table cellspacing="0" cellpadding="0" class="i-table">
+  <thead>
+    <tr>
+      <th class="th" align="left">Id</th><th class="th" align="left">Date</th>
+      <th class="th" align="left">Quantity</th><th class="th" align="left">Container</th>
+      <th class="th" align="left">Delivery</th><th class="th" align="left">Gst</th>
+      <th class="th" align="left">Total</th><th class="th" align="left">Date</th>
+      <th class="th" align="left">Mobile</th><th class="th" align="left">Print</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let a of orderHistory">
+      <td class="td">{{a.id}}</td><td class="td">{{a.date}}</td><td class="td">{{a.total_quantity}}</td>
+      <td class="td">{{a.container_charge}}</td><td class="td">{{a.delivery_charge}}</td><td class="td">{{a.cgst+a.sgst}}</td>
+      <td class="td">{{a.gtotal_price}}</td><td class="td">{{a.date}}</td><td class="td">{{a.mobile}}</td>
+      <td class="td" (click)="reGenBill(a.id)">print</td>
+    </tr>
+  </tbody>
+</table>
+</div>
